@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Roles - Resume Analyzer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background: #f4f7fb; color: #0f172a; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .header h1 { color: #0b3b6f; }
+        .header a { background: #2563eb; color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none; }
+        .role-card { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; border-top: 4px solid #2563eb; }
+        .role-card h3 { color: #0b3b6f; margin-bottom: 10px; }
+        .skill-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+        .skill { background: #e6f0ff; color: #2563eb; padding: 4px 10px; border-radius: 4px; font-size: 0.85rem; }
+        .course-list { margin-top: 15px; padding-top: 15px; border-top: 1px solid #edf6ff; }
+        .course-item { background: #f7fbff; padding: 8px 12px; border-radius: 6px; margin: 6px 0; font-size: 0.9rem; color: #0b2540; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💼 Job Roles</h1>
+            <a href="{{ url_for('index') }}">← Back</a>
+        </div>
+
+        {% for role, skills in job_roles.items() %}
+            <div class="role-card">
+                <h3>{{ role }}</h3>
+                
+                <div>
+                    <strong style="color: #0b3b6f;">Required Skills:</strong>
+                    <div class="skill-list">
+                        {% for skill in skills %}
+                            <span class="skill">{{ skill | title }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {% if course_recommendations[role] %}
+                <div class="course-list">
+                    <strong style="color: #0b3b6f;">Recommended Courses:</strong>
+                    {% for course in course_recommendations[role] %}
+                        <div class="course-item">
+                            <strong>{{ course.title }}</strong><br>
+                            <a href="{{ course.url }}" target="_blank" style="color: #2563eb; text-decoration: none; font-size: 0.85rem;">Learn more →</a>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <div style="text-align: center; padding: 20px; color: #666; background: #fff; border-radius: 10px; margin-top: 20px;">
+            <p>Choose a role that matches your interests and start learning! 🎯</p>
+        </div>
+    </div>
+</body>
+</html>

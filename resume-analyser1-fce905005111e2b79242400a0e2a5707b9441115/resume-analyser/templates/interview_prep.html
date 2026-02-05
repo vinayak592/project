@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interview Prep - Resume Analyzer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background: #f4f7fb; color: #0f172a; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .header h1 { color: #0b3b6f; }
+        .header a { background: #2563eb; color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none; }
+        .section { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; }
+        .section h3 { color: #0b3b6f; margin-bottom: 15px; border-bottom: 2px solid #e6f0ff; padding-bottom: 10px; }
+        .qa-item { background: #f7fbff; padding: 15px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #2563eb; }
+        .qa-item strong { color: #0b3b6f; display: block; margin-bottom: 8px; }
+        .qa-item p { color: #555; line-height: 1.6; margin-top: 8px; }
+        .tip { background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 12px; border-radius: 6px; margin: 10px 0; border-left: 4px solid #f59e0b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎤 Interview Preparation</h1>
+            <a href="{{ url_for('index') }}">← Back</a>
+        </div>
+
+        <div class="section">
+            <h3>📋 Common Interview Questions</h3>
+
+            <div class="qa-item">
+                <strong>Q: Tell me about yourself</strong>
+                <p>A: Provide a concise summary of your professional background, key skills, and career goals. Focus on your achievements and how they relate to the position.</p>
+                <div class="tip">💡 Keep it 2-3 minutes. Structure: Background → Skills → Achievements → Why this role?</div>
+            </div>
+
+            <div class="qa-item">
+                <strong>Q: What are your strengths?</strong>
+                <p>A: Highlight 2-3 genuine strengths with specific examples. Connect them to the job requirements.</p>
+                <div class="tip">💡 Use the STAR method (Situation, Task, Action, Result) for your examples.</div>
+            </div>
+
+            <div class="qa-item">
+                <strong>Q: What are your weaknesses?</strong>
+                <p>A: Be honest but strategic. Mention a real weakness you're actively working to improve, then explain your action plan.</p>
+                <div class="tip">💡 Show growth mindset: "I struggled with X, but I've taken courses and now..."</div>
+            </div>
+
+            <div class="qa-item">
+                <strong>Q: Why do you want this job?</strong>
+                <p>A: Show genuine interest in the company and role. Connect your skills and career goals to their needs.</p>
+                <div class="tip">💡 Research the company beforehand. Reference specific projects or values.</div>
+            </div>
+
+            <div class="qa-item">
+                <strong>Q: Tell me about a challenging project</strong>
+                <p>A: Use the STAR method. Describe the challenge, your approach, the action you took, and the results.</p>
+                <div class="tip">💡 Show problem-solving skills, teamwork, and how you handle pressure.</div>
+            </div>
+
+            <div class="qa-item">
+                <strong>Q: Where do you see yourself in 5 years?</strong>
+                <p>A: Show ambition and alignment with company growth. Be realistic and focused on skill development.</p>
+                <div class="tip">💡 Connect your goals to the company's trajectory and growth opportunities.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>🎯 Interview Preparation Checklist</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li style="padding: 8px 0; display: flex; align-items: center;">
+                    <input type="checkbox" style="margin-right: 10px;"> 
+                    Research the company thoroughly (mission, products, recent news)
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center;">
+                    <input type="checkbox" style="margin-right: 10px;"> 
+                    Understand the job description and required skills
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center;">
+                    <input type="checkbox" style="margin-right: 10px;"> 
+                    Prepare 3-5 examples using the STAR method
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center;">
+                    <input type="checkbox" style="margin-right: 10px;"> 
+                    Prepare questions to ask the interviewer
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center;">
+                    <input type="checkbox" style="margin-right: 10px;"> 
+                    Practice with a friend or mentor
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center;">
+                    <input type="checkbox" style="margin-right: 10px;"> 
+                    Prepare your outfit (dress appropriately for the company culture)
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center;">
+                    <input type="checkbox" style="margin-right: 10px;"> 
+                    Test your tech setup (camera, mic, internet) for virtual interviews
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>💪 Day Before Tips</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li style="padding: 8px 0;">✓ Get enough sleep</li>
+                <li style="padding: 8px 0;">✓ Review your resume and key points</li>
+                <li style="padding: 8px 0;">✓ Prepare your interview outfit</li>
+                <li style="padding: 8px 0;">✓ Plan your route/logistics</li>
+                <li style="padding: 8px 0;">✓ Do some light practice</li>
+                <li style="padding: 8px 0;">✓ Eat healthy meals to stay energized</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>🚀 During the Interview</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li style="padding: 8px 0;">✓ Arrive 10-15 minutes early</li>
+                <li style="padding: 8px 0;">✓ Greet with a firm handshake and smile</li>
+                <li style="padding: 8px 0;">✓ Maintain eye contact and good posture</li>
+                <li style="padding: 8px 0;">✓ Listen carefully before answering</li>
+                <li style="padding: 8px 0;">✓ Use specific examples and the STAR method</li>
+                <li style="padding: 8px 0;">✓ Ask thoughtful questions about the role</li>
+                <li style="padding: 8px 0;">✓ Send a thank you email within 24 hours</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #7c3aed, #6d28d9); color: #fff; border-radius: 10px; margin-top: 20px;">
+            <h3>🎉 You've Got This!</h3>
+            <p style="margin-top: 10px;">Remember: Interviews are a two-way conversation. Show them who you are and what you can bring to their team!</p>
+        </div>
+    </div>
+</body>
+</html>

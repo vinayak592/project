@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Career Tips - Resume Analyzer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background: #f4f7fb; color: #0f172a; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .header h1 { color: #0b3b6f; }
+        .header a { background: #2563eb; color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none; }
+        .tip-card { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; border-top: 4px solid #2563eb; }
+        .tip-card h3 { color: #0b3b6f; margin-bottom: 10px; }
+        .tip-card p { line-height: 1.6; color: #555; }
+        .tip-list { list-style: none; padding-left: 0; }
+        .tip-list li { padding: 8px 0; padding-left: 25px; position: relative; }
+        .tip-list li:before { content: "✓"; position: absolute; left: 0; color: #2563eb; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💡 Career Tips</h1>
+            <a href="{{ url_for('index') }}">← Back</a>
+        </div>
+
+        <div class="tip-card">
+            <h3>📈 Build a Strong Portfolio</h3>
+            <p>Create 2-3 impressive projects that showcase your skills. Employers want to see what you can build, not just what you claim to know.</p>
+            <ul class="tip-list">
+                <li>Choose projects relevant to your target role</li>
+                <li>Document your code with clear comments</li>
+                <li>Deploy projects on GitHub or live demos</li>
+                <li>Include README files explaining your work</li>
+            </ul>
+        </div>
+
+        <div class="tip-card">
+            <h3>🔗 Network & Build Connections</h3>
+            <p>Your professional network is crucial for career growth. Connect with like-minded professionals and learn from their experiences.</p>
+            <ul class="tip-list">
+                <li>Maintain an active LinkedIn profile</li>
+                <li>Attend tech meetups and conferences</li>
+                <li>Contribute to open source projects</li>
+                <li>Engage in professional communities</li>
+            </ul>
+        </div>
+
+        <div class="tip-card">
+            <h3>📖 Keep Learning & Stay Updated</h3>
+            <p>Technology evolves rapidly. Dedicate time to learning new skills and staying current with industry trends.</p>
+            <ul class="tip-list">
+                <li>Take online courses regularly</li>
+                <li>Read tech blogs and articles</li>
+                <li>Follow industry leaders on social media</li>
+                <li>Join professional forums and communities</li>
+            </ul>
+        </div>
+
+        <div class="tip-card">
+            <h3>💼 Tailor Your Resume</h3>
+            <p>Your resume is your first impression. Make it count by tailoring it for each position.</p>
+            <ul class="tip-list">
+                <li>Match keywords from job description</li>
+                <li>Highlight relevant projects and achievements</li>
+                <li>Keep it concise (1-2 pages max)</li>
+                <li>Use quantifiable results and metrics</li>
+            </ul>
+        </div>
+
+        <div class="tip-card">
+            <h3>🎯 Set Career Goals</h3>
+            <p>Clear goals help you stay focused and motivated. Define both short-term and long-term objectives.</p>
+            <ul class="tip-list">
+                <li>Set SMART goals (Specific, Measurable, Achievable, Relevant, Time-bound)</li>
+                <li>Create a learning roadmap</li>
+                <li>Review progress quarterly</li>
+                <li>Celebrate small wins along the way</li>
+            </ul>
+        </div>
+
+        <div class="tip-card">
+            <h3>💬 Communicate Effectively</h3>
+            <p>Strong communication skills set you apart from other candidates. Practice both verbal and written communication.</p>
+            <ul class="tip-list">
+                <li>Write clear, concise emails</li>
+                <li>Practice public speaking</li>
+                <li>Learn to give constructive feedback</li>
+                <li>Develop active listening skills</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #059669, #047857); color: #fff; border-radius: 10px; margin-top: 20px;">
+            <h3>🚀 Remember: Success is a Journey, Not a Destination!</h3>
+            <p style="margin-top: 10px;">Start small, stay consistent, and keep improving. Your effort today will shape your future tomorrow!</p>
+        </div>
+    </div>
+</body>
+</html>

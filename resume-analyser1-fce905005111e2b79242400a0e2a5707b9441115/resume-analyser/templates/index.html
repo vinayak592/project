@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Analyzer</title>
+    <style>
+    /* Inline CSS for three-column layout: left sidebar + center content + right chatbot */
+    body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #e8f1f8;
+        color: #0f172a;
+        margin: 0;
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        display: flex;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
+    .sidebar {
+        width: 280px;
+        background: #d4e5f0;
+        box-shadow: 2px 0 6px rgba(12,24,42,0.1);
+        padding: 20px 12px;
+        overflow-y: auto;
+        position: fixed;
+        height: 100vh;
+        left: 0;
+        top: 0;
+    }
+    .main-content {
+        margin-left: 280px;
+        margin-right: 340px;
+        flex: 1;
+        padding: 24px 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .right-sidebar {
+        width: 320px;
+        background: #fff;
+        box-shadow: -2px 0 6px rgba(12,24,42,0.1);
+        padding: 20px 12px;
+        position: fixed;
+        height: 100vh;
+        right: 0;
+        top: 0;
+        overflow-y: auto;
+        border-left: 1px solid #edf6ff;
+    }
+    h2 {
+        text-align: center;
+        margin: 0 0 18px 0;
+        font-size: 2.5rem;
+        color: #0b3b6f;
+        font-weight: 700;
+    }
+    .nav-top { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    .nav-top a { font-size: 0.85rem; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+    .nav-top a:first-child { background: #2563eb; color: #fff; }
+    .nav-top a:first-child:hover { background: #1e40af; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+    .nav-top a:last-child { background: #059669; color: #fff; }
+    .nav-top a:last-child:hover { background: #047857; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3); }
+    .landing-hero {
+        text-align: center;
+        padding: 60px 20px;
+        max-width: 800px;
+        animation: fadeInDown 0.8s ease-out;
+    }
+    .landing-hero h2 {
+        font-size: 3rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 15px;
+    }
+    .landing-hero p {
+        font-size: 1.2rem;
+        color: #555;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+    .cta-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-bottom: 60px;
+        flex-wrap: wrap;
+    }
+    .cta-btn {
+        padding: 14px 32px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s;
+        border: 2px solid;
+    }
+    .cta-btn-primary {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #fff;
+        border-color: transparent;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+    .cta-btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+    .cta-btn-secondary {
+        background: #fff;
+        color: #667eea;
+        border-color: #667eea;
+    }
+    .cta-btn-secondary:hover {
+        background: #f0f4ff;
+        transform: translateY(-3px);
+    }
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+        max-width: 1000px;
+    }
+    .feature-card {
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        text-align: center;
+        transition: all 0.3s;
+        animation: fadeInUp 0.6s ease-out backwards;
+    }
+    .feature-card:nth-child(1) { animation-delay: 0.1s; }
+    .feature-card:nth-child(2) { animation-delay: 0.2s; }
+    .feature-card:nth-child(3) { animation-delay: 0.3s; }
+    .feature-card:nth-child(4) { animation-delay: 0.4s; }
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+    .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 12px;
+    }
+    .feature-card h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        color: #0b3b6f;
+    }
+    .feature-card p {
+        font-size: 0.9rem;
+        color: #666;
+        line-height: 1.5;
+    }
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        max-width: 720px;
+        width: 100%;
+        margin: 12px auto 18px;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(12, 24, 42, 0.1);
+    }
+    .upload-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 40px;
+        border: 3px dashed #2563eb;
+        border-radius: 10px;
+        background: #f8fbff;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .upload-box:hover {
+        background: #f0f9ff;
+        border-color: #1e40af;
+    }
+    .upload-box input[type="file"] {
+        display: none;
+    }
+    .upload-text {
+        font-size: 1.1rem;
+        color: #0b3b6f;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+    .upload-subtext {
+        font-size: 0.9rem;
+        color: #666;
+    }
+    input[type="file"], input[type="number"] { padding: 10px; border: 2px solid #dbeafe; border-radius: 8px; transition: all 0.3s; }
+    input[type="file"]:focus, input[type="number"]:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+    button { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3); }
+    button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4); }
+    button:active { transform: translateY(0); }
+    h3 { color: #0b2540; font-size: 1.3rem; margin: 20px 0 15px; }
+    ul { list-style: none; padding: 0; max-width: 720px; margin: 8px auto; width: 100%; }
+    li { background: linear-gradient(135deg, #f0f9ff, #f8fbff); border-left: 4px solid #2563eb; padding: 12px 15px; border-radius: 8px; margin: 8px 0; }
+    .sidebar-section { margin-bottom: 24px; border-bottom: 1px solid #edf6ff; padding-bottom: 16px; }
+    .sidebar-section:last-child { border: none; }
+    .sidebar-section h4 { margin: 0 0 12px; color: #0b3b6f; font-size: 0.95rem; }
+    .sidebar-link { display: block; padding: 8px 12px; background: #f7fbff; border-radius: 6px; text-decoration: none; color: #2563eb; margin-bottom: 6px; font-size: 0.9rem; border-left: 3px solid transparent; transition: all 0.3s; }
+    .sidebar-link:hover { background: #eff6ff; border-left-color: #2563eb; transform: translateX(4px); }
+    .chat-panel { margin-top: 12px; }
+    .chat-messages { height: 300px; overflow: auto; padding: 10px; background: #f7fbff; border-radius: 6px; border: 1px solid #eaf3ff; font-size: 0.85rem; margin-bottom: 8px; }
+    .chat-input-group { display: flex; gap: 6px; }
+    .chat-input-group input { flex: 1; padding: 8px; border: 1px solid #dbeafe; border-radius: 6px; font-size: 0.85rem; }
+    .chat-input-group button { padding: 8px 12px; font-size: 0.85rem; }
+    .right-sidebar h4 { margin: 0 0 12px; color: #0b3b6f; font-size: 0.95rem; }
+    .welcome-message {
+        max-width: 700px;
+        background: linear-gradient(135deg, #fff 0%, #f8fbff 100%);
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(12, 24, 42, 0.1);
+        text-align: center;
+        margin: 40px 0;
+    }
+    .welcome-message h3 {
+        color: #0b3b6f;
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+    .welcome-message p {
+        color: #555;
+        font-size: 1.05rem;
+        line-height: 1.6;
+        margin-bottom: 25px;
+    }
+    @media (max-width: 1024px) {
+        .right-sidebar { width: 280px; }
+        .main-content { margin-right: 300px; }
+    }
+    @media (max-width: 768px) {
+        body { flex-direction: column; }
+        .sidebar { position: static; width: 100%; height: auto; box-shadow: 0 2px 6px rgba(12,24,42,0.1); }
+        .main-content { margin-left: 0; margin-right: 0; }
+        .right-sidebar { position: static; width: 100%; height: auto; box-shadow: 0 2px 6px rgba(12,24,42,0.1); border-left: none; border-top: 1px solid #edf6ff; }
+        .landing-hero h2 { font-size: 2rem; }
+        .landing-hero p { font-size: 1rem; }
+        .cta-buttons { flex-direction: column; }
+        .cta-btn { width: 100%; }
+    }
+    </style>
+</head>
+<body>
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+        <div class="nav-top">
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('profile') }}" style="background:#2563eb;color:#fff;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:0.85rem;font-weight:600;">👤 Profile</a>
+                <a href="{{ url_for('logout') }}" style="background:#dc2626;color:#fff;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:0.85rem;font-weight:600;">🚪 Logout</a>
+            {% endif %}
+        </div>
+
+        {% if current_user.is_authenticated %}
+        <!-- Dashboard -->
+        <div class="sidebar-section">
+            <h4>🏠 Dashboard</h4>
+            <a href="{{ url_for('dashboard') }}" class="sidebar-link">📈 My Dashboard</a>
+        </div>
+
+        <!-- Analysis -->
+        <div class="sidebar-section">
+            <h4>📊 Analysis</h4>
+            <a href="/charts" class="sidebar-link">View Charts</a>
+            <a href="/report" class="sidebar-link">Detailed Report</a>
+            <a href="/download-report" class="sidebar-link">📥 Download PDF</a>
+        </div>
+
+        <!-- Learning & Resources -->
+        <div class="sidebar-section">
+            <h4>📚 Resources</h4>
+            <a href="{{ url_for('skill_library') }}" class="sidebar-link">Skill Library</a>
+            <a href="{{ url_for('job_roles') }}" class="sidebar-link">Job Roles</a>
+            <a href="{{ url_for('learning_resources') }}" class="sidebar-link">Courses</a>
+        </div>
+
+        <!-- LinkedIn Jobs -->
+        <div class="sidebar-section">
+            <h4>💼 Jobs</h4>
+            <a href="{{ url_for('linkedin_jobs') }}" class="sidebar-link">🔗 LinkedIn Jobs</a>
+        </div>
+
+        <!-- Career -->
+        <div class="sidebar-section">
+            <h4>💼 Career</h4>
+            <a href="{{ url_for('career_tips') }}" class="sidebar-link">Career Tips</a>
+            <a href="{{ url_for('interview_prep') }}" class="sidebar-link">Interview Prep</a>
+        </div>
+
+        <!-- Settings -->
+        <div class="sidebar-section">
+            <h4>⚙️ Settings</h4>
+            <a href="{{ url_for('settings') }}" class="sidebar-link">Preferences</a>
+            <a href="{{ url_for('help') }}" class="sidebar-link">Help & FAQ</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Right Sidebar - Chatbot -->
+    {% if current_user.is_authenticated %}
+    <div class="right-sidebar">
+        <h4>🤖 AI Assistant</h4>
+        <p style="font-size:0.8rem;color:#666;margin:0 0 12px;">Ask me anything about your resume, skills, career advice, or job market insights!</p>
+        <div class="sidebar-section chat-panel">
+            <div id="chatMessages" class="chat-messages"></div>
+            <div class="chat-input-group">
+                <input id="chatInput" type="text" placeholder="Ask..." required>
+                <button id="chatSend" type="button">Send</button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <div class="main-content">
+    {% if current_user.is_authenticated %}
+        <h2>AI Resume Analyzer</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="resume" required>
+        <div class="options" style="width:100%;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:6px;">
+            <label style="font-size:0.95rem;">Max roles:
+                <select name="max_roles">
+                    <option value="all">All</option>
+                    <option value="top3">Top 3</option>
+                    <option value="top1">Top 1</option>
+                </select>
+            </label>
+            <label style="font-size:0.95rem;">Min score:
+                <input type="number" name="min_score" min="0" max="100" value="0" style="width:80px;">
+            </label>
+            <label style="font-size:0.95rem;">Show bars:
+                <input type="checkbox" name="show_bars">
+            </label>
+        </div>
+        <button type="submit">Analyze</button>
+    </form>
+    {% endif %}
+
+    {% if skills %}
+        <h3>📊 Resume Score</h3>
+        <div style="max-width:720px;margin:12px auto;background:linear-gradient(180deg,#2563eb,#1e40af);color:#fff;padding:24px;border-radius:10px;text-align:center;">
+            <div style="font-size:3rem;font-weight:700;">{{ insights.resume_score }}%</div>
+            <p style="margin:8px 0 0;">{{ insights.feedback }}</p>
+        </div>
+
+        <h3>✅ Your Top Strengths</h3>
+        <div style="max-width:720px;margin:12px auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;">
+            {% for skill in insights.strengths[:5] %}
+            <div style="background:#d1fae5;padding:12px;border-radius:8px;border-left:4px solid #059669;text-align:center;">
+                <strong>{{ skill }}</strong><br><span style="font-size:0.85rem;color:#666;">{{ insights.proficiency.get(skill, 'Intermediate') }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h3>🎯 Most Common Gaps</h3>
+        <ul style="max-width:720px;margin:8px auto;list-style:none;padding:0;">
+            {% for skill, count in insights.weaknesses[:3] %}
+            <li style="background:#fee2e2;padding:8px;border-radius:6px;margin-bottom:6px;border-left:4px solid #dc2626;">
+                <strong>{{ skill }}</strong> <span style="float:right;color:#666;">{{ count }} role(s)</span>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <h3>📈 High-Demand Skills to Learn</h3>
+        <div style="max-width:720px;margin:12px auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;">
+            {% for skill, demand in insights.trending_skills[:4] %}
+            <div style="background:#fef3c7;padding:10px;border-radius:6px;border-left:4px solid #f59e0b;text-align:center;">
+                <strong style="font-size:0.95rem;">{{ skill }}</strong><br><span style="font-size:0.8rem;color:#666;">{{ demand }} roles</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h3>Skills Found:</h3>
+        <ul>
+            {% for s in skills %}
+                <li>{{ s }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Job Role Match:</h3>
+        <ul>
+            {% for role, score in roles %}
+                {% if show_bars %}
+                <li>
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <strong style="min-width:140px;">{{ role }}</strong>
+                        <div style="flex:1;background:#e6f0ff;border-radius:8px;overflow:hidden;height:14px;">
+                            <div style="height:100%;background:linear-gradient(90deg,#2563eb,#1e40af);width:{{ score }}%;"></div>
+                        </div>
+                        <span style="min-width:44px;text-align:right;">{{ score }}%</span>
+                    </div>
+                </li>
+                {% else %}
+                <li>{{ role }} : {{ score }}%</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if current_user.is_authenticated %}
+    {% else %}
+    <!-- Landing Page -->
+    <div class="landing-hero">
+        <h2>📊 AI Resume Analyzer</h2>
+        <p>Unlock your career potential with intelligent resume analysis, skill gap identification, and personalized career guidance powered by AI.</p>
+        
+        <div class="cta-buttons">
+            <a href="{{ url_for('login') }}" class="cta-btn cta-btn-primary">Sign In</a>
+            <a href="{{ url_for('register') }}" class="cta-btn cta-btn-secondary">Create Account</a>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📄</div>
+                <h3>Smart Analysis</h3>
+                <p>Upload your resume and get instant AI-powered analysis of your skills, experience, and fit for different roles.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Skill Gaps</h3>
+                <p>Identify missing skills for your target roles and get personalized recommendations to bridge the gap.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>Learning Paths</h3>
+                <p>Access curated learning resources and courses tailored to your career goals from industry leaders.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💼</div>
+                <h3>Job Matching</h3>
+                <p>Find job opportunities on LinkedIn that match your skills and explore career paths with real job data.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Detailed Reports</h3>
+                <p>Get comprehensive reports with visual charts, market insights, and actionable recommendations.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI Assistant</h3>
+                <p>Ask our intelligent chatbot anything about your resume, career advice, or skill development strategies.</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    </div><!-- Close main-content -->
+
+    <script>
+    (function(){
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatSend = document.getElementById('chatSend');
+
+        if(chatMessages && chatInput && chatSend) {
+            function appendMessage(text, sender){
+                const el = document.createElement('div');
+                el.style.margin = '4px 0';
+                el.style.display = 'flex';
+                el.style.justifyContent = sender==='user' ? 'flex-end' : 'flex-start';
+                const bubble = document.createElement('div');
+                bubble.textContent = text;
+                bubble.style.padding='6px 8px';
+                bubble.style.borderRadius='8px';
+                bubble.style.maxWidth='85%';
+                bubble.style.whiteSpace='pre-wrap';
+                bubble.style.fontSize='0.85rem';
+                bubble.style.background = sender==='user' ? '#1e40af' : '#e6f0ff';
+                bubble.style.color = sender==='user' ? '#fff' : '#0b2540';
+                el.appendChild(bubble);
+                chatMessages.appendChild(el);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function sendChat(){
+                const msg = (chatInput.value || '').trim();
+                if(!msg) return;
+                appendMessage(msg,'user');
+                chatInput.value = '';
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({message: msg})
+                }).then(r=>r.json()).then(data=>{
+                    appendMessage(data.reply || 'No reply','bot');
+                }).catch(()=>{
+                    appendMessage('Error contacting server.','bot');
+                });
+            }
+
+            chatSend.addEventListener('click', sendChat);
+            chatInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter'){ sendChat(); } });
+        }
+    })();
+    </script>
+</body>
+</html>

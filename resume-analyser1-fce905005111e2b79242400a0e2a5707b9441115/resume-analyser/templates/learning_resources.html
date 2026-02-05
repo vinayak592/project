@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Learning Resources - Resume Analyzer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background: #f4f7fb; color: #0f172a; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .header h1 { color: #0b3b6f; }
+        .header a { background: #2563eb; color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none; }
+        .role-section { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; }
+        .role-section h3 { color: #0b3b6f; margin-bottom: 15px; border-bottom: 2px solid #e6f0ff; padding-bottom: 10px; }
+        .course-card { background: linear-gradient(135deg, #f7fbff, #f0f9ff); padding: 15px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #2563eb; }
+        .course-card strong { color: #0b3b6f; display: block; margin-bottom: 8px; }
+        .course-card a { display: inline-block; background: #2563eb; color: #fff; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85rem; margin-top: 8px; }
+        .course-card a:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Learning Resources</h1>
+            <a href="{{ url_for('index') }}">← Back</a>
+        </div>
+
+        {% for role, course_list in courses.items() %}
+            <div class="role-section">
+                <h3>🎓 {{ role }}</h3>
+                {% for course in course_list %}
+                    <div class="course-card">
+                        <strong>{{ course.title }}</strong>
+                        <p style="font-size: 0.9rem; color: #666; margin: 5px 0;">Start learning {{ role | lower }} with this comprehensive course.</p>
+                        <a href="{{ course.url }}" target="_blank">Start Learning →</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #2563eb, #1e40af); color: #fff; border-radius: 10px; margin-top: 20px;">
+            <h3>🚀 Start Your Learning Journey Today!</h3>
+            <p style="margin-top: 10px;">Choose a course and dedicate time to learning. Consistency is key to success!</p>
+        </div>
+    </div>
+</body>
+</html>

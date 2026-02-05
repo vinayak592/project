@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skill Library - Resume Analyzer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background: #f4f7fb; color: #0f172a; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .header h1 { color: #0b3b6f; }
+        .header a { background: #2563eb; color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none; }
+        .section { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; }
+        .section h3 { color: #0b3b6f; margin-bottom: 15px; }
+        .skill-list { display: flex; flex-wrap: wrap; gap: 8px; }
+        .skill-badge { background: linear-gradient(135deg, #2563eb, #1e40af); color: #fff; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; cursor: default; }
+        .skill-badge:hover { opacity: 0.9; }
+        .role-card { background: #f7fbff; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #2563eb; }
+        .role-card h4 { color: #0b3b6f; margin-bottom: 10px; }
+        .role-skills { display: flex; flex-wrap: wrap; gap: 6px; }
+        .role-skill { background: #fff; color: #2563eb; padding: 4px 10px; border-radius: 4px; border: 1px solid #dbeafe; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Skill Library</h1>
+            <a href="{{ url_for('index') }}">← Back</a>
+        </div>
+
+        <div class="section">
+            <h3>🔧 All Available Skills ({{ all_skills | length }})</h3>
+            <div class="skill-list">
+                {% for skill in all_skills %}
+                    <span class="skill-badge">{{ skill | title }}</span>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>💼 Skills by Job Role</h3>
+            {% for role, skills in job_roles.items() %}
+                <div class="role-card">
+                    <h4>{{ role }}</h4>
+                    <div class="role-skills">
+                        {% for skill in skills %}
+                            <span class="role-skill">{{ skill | title }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div style="text-align: center; padding: 20px; color: #666;">
+            <p>Master these skills to advance in your career! 🚀</p>
+        </div>
+    </div>
+</body>
+</html>

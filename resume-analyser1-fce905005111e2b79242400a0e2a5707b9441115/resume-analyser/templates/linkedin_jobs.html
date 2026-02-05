@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LinkedIn Jobs - Resume Analyzer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background: #f4f7fb; color: #0f172a; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .header h1 { color: #0b3b6f; }
+        .header a { background: #2563eb; color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none; }
+        .role-section { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; }
+        .role-section h3 { color: #0b3b6f; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #0ea5e9; }
+        .jobs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+        .job-card { background: linear-gradient(135deg, #f0f9ff, #e0f2fe); padding: 15px; border-radius: 8px; border-left: 4px solid #0ea5e9; transition: all 0.3s ease; }
+        .job-card:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .job-card h4 { color: #0c4a6e; margin-bottom: 8px; font-size: 0.95rem; }
+        .job-info { font-size: 0.85rem; color: #555; margin: 6px 0; }
+        .job-info strong { color: #0b2540; }
+        .linkedin-btn { display: inline-block; background: linear-gradient(135deg, #0a66c2, #0854a3); color: #fff; padding: 8px 14px; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-top: 10px; transition: all 0.3s; border: none; cursor: pointer; text-align: center; }
+        .linkedin-btn:hover { opacity: 0.9; transform: scale(1.02); }
+        .search-section { background: linear-gradient(135deg, #0a66c2, #0854a3); color: #fff; padding: 25px; border-radius: 10px; margin-bottom: 30px; }
+        .search-section h2 { margin-bottom: 15px; }
+        .search-section p { margin-bottom: 15px; line-height: 1.6; }
+        .search-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+        .skill-btn { background: rgba(255,255,255,0.2); color: #fff; padding: 8px 12px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.4); cursor: pointer; transition: all 0.3s; text-decoration: none; text-align: center; }
+        .skill-btn:hover { background: rgba(255,255,255,0.3); border-color: #fff; }
+        .tips-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; border-radius: 6px; margin-top: 20px; }
+        .tips-box h4 { color: #92400e; margin-bottom: 10px; }
+        .tips-box li { margin: 5px 0 5px 20px; color: #855900; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔗 LinkedIn Jobs</h1>
+            <a href="{{ url_for('index') }}">← Back</a>
+        </div>
+
+        <div class="search-section">
+            <h2>🔍 Search Jobs by Your Skills</h2>
+            <p>Click on any skill button below to search for jobs on LinkedIn. This will open LinkedIn job listings matching your skills.</p>
+            
+            <div class="search-options">
+                <a href="https://www.linkedin.com/jobs/search/?keywords=python" target="_blank" class="skill-btn">Python Jobs</a>
+                <a href="https://www.linkedin.com/jobs/search/?keywords=java" target="_blank" class="skill-btn">Java Jobs</a>
+                <a href="https://www.linkedin.com/jobs/search/?keywords=javascript" target="_blank" class="skill-btn">JavaScript Jobs</a>
+                <a href="https://www.linkedin.com/jobs/search/?keywords=sql" target="_blank" class="skill-btn">SQL Jobs</a>
+                <a href="https://www.linkedin.com/jobs/search/?keywords=machine%20learning" target="_blank" class="skill-btn">ML Jobs</a>
+                <a href="https://www.linkedin.com/jobs/search/?keywords=data%20science" target="_blank" class="skill-btn">Data Science</a>
+                <a href="https://www.linkedin.com/jobs/search/?keywords=web%20developer" target="_blank" class="skill-btn">Web Dev</a>
+                <a href="https://www.linkedin.com/jobs/search/?keywords=devops" target="_blank" class="skill-btn">DevOps Jobs</a>
+            </div>
+        </div>
+
+        {% for role, jobs in job_opportunities.items() %}
+        <div class="role-section">
+            <h3>💼 {{ role }} Opportunities</h3>
+            <div class="jobs-grid">
+                {% for job in jobs %}
+                <div class="job-card">
+                    <h4>{{ job.title }}</h4>
+                    <div class="job-info">
+                        <strong>Company:</strong> {{ job.company }}
+                    </div>
+                    <div class="job-info">
+                        <strong>Location:</strong> {{ job.location }}
+                    </div>
+                    <a href="{{ job.linkedin_search }}" target="_blank" class="linkedin-btn">
+                        🔗 View on LinkedIn
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="tips-box">
+            <h4>💡 Tips for Applying on LinkedIn</h4>
+            <ul>
+                <li>✅ Keep your profile updated with your latest skills and experience</li>
+                <li>✅ Customize your resume for each job you apply to</li>
+                <li>✅ Network with professionals in your target industry</li>
+                <li>✅ Use relevant keywords matching the job description</li>
+                <li>✅ Follow companies you're interested in to get job alerts</li>
+                <li>✅ Engage with industry content to build your professional brand</li>
+                <li>✅ Ask for recommendations from colleagues and managers</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #0a66c2, #0854a3); color: #fff; border-radius: 10px; margin-top: 30px;">
+            <h3>🚀 Ready to Apply?</h3>
+            <p style="margin-top: 10px;">Click on any "View on LinkedIn" button to explore job listings. Make sure your LinkedIn profile is complete and professional!</p>
+            <a href="https://www.linkedin.com/jobs/" target="_blank" style="display: inline-block; background: #fff; color: #0a66c2; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; margin-top: 15px;">Open LinkedIn Jobs →</a>
+        </div>
+    </div>
+</body>
+</html>

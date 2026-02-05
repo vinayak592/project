@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Profile - Resume Analyzer</title>
+    <style>
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background: #f4f7fb; color: #0f172a; margin: 0; padding: 32px 12px; }
+        .container { max-width: 720px; margin: 0 auto; background: #fff; padding: 24px; border-radius: 10px; box-shadow: 0 6px 20px rgba(12, 24, 42, 0.06); }
+        h2 { color: #0b3b6f; margin-top: 0; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .logout-btn { background: #dc2626; color: #fff; padding: 8px 12px; border-radius: 8px; text-decoration: none; }
+        .logout-btn:hover { opacity: 0.9; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e6f0ff; }
+        th { background: #f7fbff; font-weight: 600; }
+        .back-btn { display: inline-block; background: #2563eb; color: #fff; padding: 8px 12px; border-radius: 8px; text-decoration: none; margin-bottom: 12px; }
+        .back-btn:hover { opacity: 0.95; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{{ url_for('index') }}" class="back-btn">← Back to Home</a>
+        <div class="header">
+            <h2>Hello, {{ user.username }}!</h2>
+            <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+        </div>
+
+        <h3>Upload History</h3>
+        {% if analyses %}
+        <table>
+            <tr>
+                <th>File Name</th>
+                <th>Skills Found</th>
+                <th>Date</th>
+            </tr>
+            {% for analysis in analyses %}
+            <tr>
+                <td>{{ analysis.filename }}</td>
+                <td>{{ analysis.skills_found[:50] }}...</td>
+                <td>{{ analysis.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>You haven't uploaded any resumes yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

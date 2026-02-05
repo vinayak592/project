@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analysis Charts</title>
+    <style>
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background:#f4f7fb; color:#0f172a; padding:24px; }
+        .container { max-width:920px; margin:8px auto; background:#fff; padding:16px; border-radius:10px; box-shadow:0 6px 20px rgba(12,24,42,0.06); }
+        h2 { margin-top:0; }
+        .chart-wrap { display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start; }
+        .chart-box { flex:1; min-width:260px; }
+        .chart-box.small { flex:0 0 260px; }
+        .chart-box canvas { width:100% !important; height:220px !important; }
+        a.button { display:inline-block;margin-bottom:8px;background:#2563eb;color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a class="button" href="/">← Back</a>
+        <h2>Analysis Charts</h2>
+        {% if roles_chart and skills_chart %}
+        <div class="chart-wrap">
+            <div class="chart-box">
+                <h3>Role Scores</h3>
+                <canvas id="rolesChart"></canvas>
+            </div>
+            <div class="chart-box small">
+                <h3>Skills Overview</h3>
+                <canvas id="skillsChart"></canvas>
+            </div>
+        </div>
+        {% else %}
+        <p>No analysis available. Please go back and analyze a resume first.</p>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    (function(){
+        const rolesData = {{ roles_chart|tojson }} || {labels:[], scores:[]};
+        const skillsData = {{ skills_chart|tojson }} || {labels:[], counts:[]};
+
+        if(rolesData && rolesData.labels && rolesData.labels.length){
+            const ctxRoles = document.getElementById('rolesChart').getContext('2d');
+            new Chart(ctxRoles, {
+                type: 'bar',
+                data: { labels: rolesData.labels, datasets:[{ label:'Match %', data: rolesData.scores, backgroundColor:'rgba(37,99,235,0.8)'}] },
+                options: { indexAxis:'y', scales:{ x:{ beginAtZero:true, max:100 } }, responsive:true, maintainAspectRatio:false }
+            });
+        }
+
+        if(skillsData && skillsData.labels && skillsData.labels.length){
+            const ctxSkills = document.getElementById('skillsChart').getContext('2d');
+            new Chart(ctxSkills, { type:'doughnut', data:{ labels:skillsData.labels, datasets:[{ data:skillsData.counts, backgroundColor:['#2563eb','#60a5fa','#93c5fd','#bfdbfe','#eff6ff'] }] }, options:{ responsive:true, maintainAspectRatio:false } });
+        }
+    })();
+    </script>
+</body>
+</html>

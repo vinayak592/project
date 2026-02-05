@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Help & FAQ - Resume Analyzer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background: #f4f7fb; color: #0f172a; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .header h1 { color: #0b3b6f; }
+        .header a { background: #2563eb; color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none; }
+        .faq-section { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; }
+        .faq-section h3 { color: #0b3b6f; margin-bottom: 15px; border-bottom: 2px solid #e6f0ff; padding-bottom: 10px; }
+        .faq-item { margin-bottom: 15px; }
+        .faq-item summary { cursor: pointer; font-weight: 600; color: #2563eb; padding: 10px; background: #f7fbff; border-radius: 6px; user-select: none; }
+        .faq-item summary:hover { background: #eff6ff; }
+        .faq-item p { color: #555; line-height: 1.6; margin-top: 10px; padding: 10px; background: #f0f9ff; border-radius: 6px; border-left: 4px solid #2563eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>❓ Help & FAQ</h1>
+            <a href="{{ url_for('index') }}">← Back</a>
+        </div>
+
+        <div class="faq-section">
+            <h3>🚀 Getting Started</h3>
+            
+            <div class="faq-item">
+                <summary>How do I start analyzing my resume?</summary>
+                <p>1. Create an account or log in<br>2. Go to the main page<br>3. Click "Upload Resume" and select a PDF file<br>4. Adjust options if needed<br>5. Click "Analyze" to see results</p>
+            </div>
+
+            <div class="faq-item">
+                <summary>What file formats are supported?</summary>
+                <p>Currently, we support PDF files only. Make sure your resume is in PDF format before uploading. We're working on supporting more formats soon!</p>
+            </div>
+
+            <div class="faq-item">
+                <summary>Is my resume data secure?</summary>
+                <p>Yes! Your data is encrypted and stored securely in our database. We never share your personal information with third parties. You can delete your data anytime from the Settings page.</p>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h3>📊 Understanding Analysis Results</h3>
+            
+            <div class="faq-item">
+                <summary>What does the Resume Score mean?</summary>
+                <p>The Resume Score (0-100%) indicates how well your resume matches our skill database and how aligned it is with current job market demands. A higher score means your skills are in high demand. This doesn't measure quality of writing, just technical skill coverage.</p>
+            </div>
+
+            <div class="faq-item">
+                <summary>What are Skill Gaps?</summary>
+                <p>Skill Gaps show the difference between skills you have and skills required for specific job roles. The AI Assistant can recommend courses and resources to help you fill these gaps.</p>
+            </div>
+
+            <div class="faq-item">
+                <summary>How are job roles matched to my resume?</summary>
+                <p>We analyze the skills found in your resume and match them against requirements for different job roles. The percentage shows how many of the role's required skills you already have.</p>
+            </div>
+
+            <div class="faq-item">
+                <summary>What do the charts show?</summary>
+                <p>The charts provide visual representations of your analysis. The bar chart shows how well your skills match different job roles. The pie chart shows the distribution of skills found in your resume.</p>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h3>🤖 AI Assistant</h3>
+            
+            <div class="faq-item">
+                <summary>What can the AI Assistant help with?</summary>
+                <p>The AI Assistant can help with: resume analysis, skill recommendations, learning paths, job role information, career advice, interview tips, and market insights. Simply ask any question related to your career!</p>
+            </div>
+
+            <div class="faq-item">
+                <summary>How do I get the best answers from the AI?</summary>
+                <p>Be specific in your questions. Instead of "help me", try "What skills do I need to become a Data Scientist?" The AI uses context from your resume analysis to provide personalized recommendations.</p>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h3>📚 Learning & Resources</h3>
+            
+            <div class="faq-item">
+                <summary>Where do I find course recommendations?</summary>
+                <p>Visit the "Learning Resources" section in the sidebar. You'll find curated courses for different job roles. You can also ask the AI Assistant which courses to take!</p>
+            </div>
+
+            <div class="faq-item">
+                <summary>Are the courses free?</summary>
+                <p>Most courses we recommend are available on platforms like Coursera, Udemy, and edX. Some are free, while others require a subscription. Check each platform for current pricing.</p>
+            </div>
+
+            <div class="faq-item">
+                <summary>How long does it take to complete a learning path?</summary>
+                <p>It depends on the course and your learning speed. Most professional certifications take 3-6 months of consistent study. We recommend dedicating 1-2 hours daily for best results.</p>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h3>❓ General Questions</h3>
+            
+            <div class="faq-item">
+                <summary>Can I have multiple accounts?</summary>
+                <p>Yes, you can create multiple accounts with different email addresses. However, we recommend using one account and uploading different resume versions.</p>
+            </div>
+
+            <div class="faq-item">
+                <summary>How often is the skill database updated?</summary>
+                <p>We regularly update our skill and job role database based on current market trends. Follow us on social media to get notified about updates!</p>
+            </div>
+
+            <div class="faq-item">
+                <summary>Can I download my analysis results?</summary>
+                <p>Yes! Click the "Download PDF" button in the Detailed Report section. This creates a comprehensive report of your analysis that you can share or print.</p>
+            </div>
+
+            <div class="faq-item">
+                <summary>How do I contact support?</summary>
+                <p>Currently, we're a small team. You can reach us by visiting our support page or sending feedback through the application. We read every message and try to respond within 24-48 hours.</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #e6f0ff, #f0f9ff); border-radius: 10px; margin-top: 20px;">
+            <h3 style="color: #0b3b6f;">Still have questions?</h3>
+            <p style="color: #0b2540; margin-top: 10px;">Ask the AI Assistant on the right sidebar! It's here to help with any questions about your career, resume, or skills.</p>
+        </div>
+    </div>
+</body>
+</html>

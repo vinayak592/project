@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - Resume Analyzer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: #0f172a; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            padding: 20px;
+        }
+        .wrapper { 
+            display: flex; 
+            gap: 30px; 
+            max-width: 1200px; 
+            width: 100%;
+            align-items: center;
+        }
+        .branding { 
+            color: #fff; 
+            flex: 1;
+            display: none;
+        }
+        @media (min-width: 768px) {
+            .branding { display: block; }
+        }
+        .branding h1 { 
+            font-size: 2.5rem; 
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        .branding p { 
+            font-size: 1.1rem; 
+            opacity: 0.9; 
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .features { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px;
+        }
+        .feature { 
+            display: flex; 
+            gap: 12px; 
+            align-items: flex-start;
+        }
+        .feature-icon { 
+            font-size: 1.8rem;
+            min-width: 30px;
+        }
+        .feature-text { 
+            opacity: 0.95;
+        }
+        .container { 
+            width: 100%; 
+            max-width: 420px;
+            background: #fff; 
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.6s ease-out;
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .logo { 
+            text-align: center; 
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        h2 { 
+            text-align: center; 
+            color: #0b3b6f; 
+            margin-bottom: 8px; 
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        .subtitle { 
+            text-align: center; 
+            color: #666; 
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+        .form-group { 
+            margin-bottom: 18px;
+        }
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: 600; 
+            color: #0b2540;
+            font-size: 0.9rem;
+        }
+        input { 
+            width: 100%; 
+            padding: 12px 15px; 
+            border: 2px solid #e5eef7; 
+            border-radius: 8px; 
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            background: #f8fbff;
+        }
+        input:focus { 
+            outline: none; 
+            border-color: #667eea; 
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        input::placeholder {
+            color: #999;
+        }
+        button { 
+            width: 100%; 
+            padding: 12px; 
+            background: linear-gradient(135deg, #667eea, #764ba2); 
+            color: #fff; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            font-size: 0.95rem;
+            margin-top: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        button:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .error { 
+            color: #dc2626; 
+            background: #fee2e2;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #dc2626;
+            font-size: 0.9rem;
+        }
+        .link { 
+            text-align: center; 
+            margin-top: 25px; 
+            padding-top: 20px;
+            border-top: 1px solid #e5eef7;
+            color: #666;
+        }
+        .link a { 
+            color: #667eea; 
+            text-decoration: none; 
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .link a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+        .back-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+        .back-link:hover {
+            color: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="branding">
+            <h1>📊 Resume Analyzer</h1>
+            <p>Unlock your career potential with AI-powered resume analysis and career guidance.</p>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-text">Smart Resume Analysis</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📈</div>
+                    <div class="feature-text">Skill Gap Identification</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💼</div>
+                    <div class="feature-text">Job Role Matching</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🤖</div>
+                    <div class="feature-text">AI Career Assistant</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📚</div>
+                    <div class="feature-text">Learning Paths & Courses</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <a href="{{ url_for('index') }}" class="back-link">← Back Home</a>
+            <div class="logo">🔓</div>
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Sign in to your account</p>
+            
+            {% if error %}
+            <p class="error">{{ error }}</p>
+            {% endif %}
+            
+            <form method="POST">
+                <div class="form-group">
+                    <label for="username">👤 Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">🔐 Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit">Sign In</button>
+            </form>
+            
+            <div class="link">
+                Don't have an account? <a href="{{ url_for('register') }}">Create one now</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

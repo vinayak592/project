@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detailed Analysis Report</title>
+    <style>
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background: #f4f7fb; color: #0f172a; margin: 0; padding: 24px 12px; }
+        .container { max-width: 920px; margin: 0 auto; background: #fff; padding: 24px; border-radius: 10px; box-shadow: 0 6px 20px rgba(12, 24, 42, 0.06); }
+        h2 { color: #0b3b6f; border-bottom: 2px solid #2563eb; padding-bottom: 8px; }
+        h3 { color: #0b2540; margin-top: 24px; }
+        .score-box { background: linear-gradient(180deg, #2563eb, #1e40af); color: #fff; padding: 24px; border-radius: 10px; text-align: center; margin-bottom: 24px; }
+        .score { font-size: 3rem; font-weight: 700; }
+        .feedback { background: #f0fdf4; padding: 12px; border-left: 4px solid #059669; border-radius: 6px; margin-bottom: 12px; }
+        .gap-item { background: #fef3c7; padding: 10px; border-radius: 6px; margin-bottom: 6px; border-left: 4px solid #f59e0b; }
+        .strength-item { background: #d1fae5; padding: 10px; border-radius: 6px; margin-bottom: 6px; border-left: 4px solid #059669; }
+        .weakness-item { background: #fee2e2; padding: 10px; border-radius: 6px; margin-bottom: 6px; border-left: 4px solid #dc2626; }
+        .path-step { background: #eff6ff; padding: 12px; border-left: 4px solid #2563eb; border-radius: 6px; margin-bottom: 8px; }
+        .role-comp { display: flex; justify-content: space-between; padding: 10px; background: #f7fbff; border-radius: 6px; margin-bottom: 6px; }
+        .back-btn { display: inline-block; background: #2563eb; color: #fff; padding: 8px 12px; border-radius: 8px; text-decoration: none; margin-bottom: 12px; }
+        .back-btn:hover { opacity: 0.95; }
+        .trending { display: inline-block; background: #fbbf24; color: #000; padding: 4px 8px; border-radius: 4px; font-size: 0.85rem; margin-right: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{{ url_for('index') }}" class="back-btn">← Back to Home</a>
+        <a href="{{ url_for('download_report') }}" style="display:inline-block;background:#059669;color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none;margin-left:6px;">📥 Download PDF</a>
+        <h2>📊 Detailed Analysis Report</h2>
+
+        {% if insights %}
+            <!-- Resume Score -->
+            <div class="score-box">
+                <div>Your Resume Score</div>
+                <div class="score">{{ insights.resume_score }}%</div>
+            </div>
+
+            <!-- Feedback -->
+            {% if insights.feedback %}
+            <div class="feedback">
+                <strong>📋 Feedback:</strong> {{ insights.feedback }}
+            </div>
+            {% endif %}
+
+            <!-- Strengths -->
+            {% if insights.strengths %}
+            <h3>✅ Your Strengths</h3>
+            <p>Top skills you already have:</p>
+            {% for skill in insights.strengths %}
+            <div class="strength-item">{{ skill }} <span class="trending">Proficiency: {{ insights.proficiency.get(skill, 'Intermediate') }}</span></div>
+            {% endfor %}
+            {% endif %}
+
+            <!-- Weaknesses / Common Gaps -->
+            {% if insights.weaknesses %}
+            <h3>🎯 Most Common Skill Gaps</h3>
+            <p>Skills most needed across roles:</p>
+            {% for skill, count in insights.weaknesses %}
+            <div class="weakness-item">{{ skill }} <span style="float:right; color:#666;">Needed in {{ count }} role(s)</span></div>
+            {% endfor %}
+            {% endif %}
+
+            <!-- Role Comparison -->
+            {% if insights.role_comparison %}
+            <h3>🏆 Role Comparison</h3>
+            <p>Your fit across different roles:</p>
+            {% for comp in insights.role_comparison %}
+            <div class="role-comp">
+                <strong>{{ comp.role }}</strong>
+                <span style="color:#2563eb; font-weight:600;">{{ comp.score }}% match | {{ comp.gap_count }} gaps</span>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <!-- Skills Gap Analysis -->
+            {% if insights.skill_gaps %}
+            <h3>📚 Skills Gap Analysis</h3>
+            {% for role, gap_info in insights.skill_gaps.items() %}
+            {% if gap_info.missing %}
+            <h4>{{ role }}</h4>
+            <p>Missing {{ gap_info.count }} skills:</p>
+            {% for skill in gap_info.missing %}
+            <div class="gap-item">{{ skill }}</div>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            <!-- Personalized Learning Paths -->
+            {% if insights.learning_paths %}
+            <h3>🚀 Personalized Learning Paths</h3>
+            {% for role, path_info in insights.learning_paths.items() %}
+            <h4>Path to become a {{ role }}</h4>
+            {% for step in path_info.steps %}
+            <div class="path-step">{{ step }}</div>
+            {% endfor %}
+            {% if path_info.courses %}
+            <strong>Recommended Courses:</strong>
+            <ul style="margin:8px 0;">
+            {% for course in path_info.courses %}
+                <li>{{ course.title }} <a href="{{ course.url }}" target="_blank" style="color:#2563eb;">Visit →</a></li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            <!-- Trending/High-Demand Skills -->
+            {% if insights.trending_skills %}
+            <h3>📈 High-Demand Skills in Job Market</h3>
+            <p>Skills appearing across multiple roles (start with these):</p>
+            {% for skill, demand in insights.trending_skills %}
+            <div style="background:#fef3c7; padding:8px; border-radius:6px; margin-bottom:6px;">
+                <strong>{{ skill }}</strong> <span style="float:right;color:#666;">In {{ demand }} role(s)</span>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+        {% else %}
+            <p>No analysis available. Please upload and analyze a resume first.</p>
+        {% endif %}
+
+        <a href="{{ url_for('index') }}" class="back-btn" style="margin-top:24px;">← Back to Home</a>
+    </div>
+</body>
+</html>

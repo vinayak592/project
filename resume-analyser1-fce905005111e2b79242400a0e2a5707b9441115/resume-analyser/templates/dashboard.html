@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Resume Analyzer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background: #f4f7fb; color: #0f172a; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .header h1 { color: #0b3b6f; }
+        .header a { background: #2563eb; color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 30px; }
+        .stat-card { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .stat-card h3 { color: #2563eb; font-size: 2.5rem; margin: 10px 0; }
+        .stat-card p { color: #666; }
+        .recent-section { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .recent-section h3 { color: #0b3b6f; margin-bottom: 15px; }
+        .skill-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+        .skill-badge { background: #e6f0ff; color: #2563eb; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; }
+        .role-item { background: #f7fbff; padding: 10px; border-radius: 6px; margin: 6px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>📊 My Dashboard</h1>
+                <p style="color: #666; margin-top: 5px;">Welcome, {{ current_user.username }}!</p>
+            </div>
+            <a href="{{ url_for('index') }}">← Back to Analyzer</a>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <p>📁 Total Analyses</p>
+                <h3>{{ total_analyses }}</h3>
+                <p style="font-size: 0.85rem;">resume uploads</p>
+            </div>
+            <div class="stat-card">
+                <p>🎯 Latest Skills</p>
+                <h3>{{ latest_skills | length }}</h3>
+                <p style="font-size: 0.85rem;">skills detected</p>
+            </div>
+            <div class="stat-card">
+                <p>💼 Matching Roles</p>
+                <h3>{{ latest_roles | length }}</h3>
+                <p style="font-size: 0.85rem;">job roles</p>
+            </div>
+        </div>
+
+        {% if latest_skills %}
+        <div class="recent-section">
+            <h3>🔍 Latest Analysis Results</h3>
+            
+            <h4 style="margin-top: 15px; color: #0b2540;">Detected Skills</h4>
+            <div class="skill-list">
+                {% for skill in latest_skills[:15] %}
+                    <span class="skill-badge">{{ skill }}</span>
+                {% endfor %}
+            </div>
+
+            {% if latest_roles %}
+            <h4 style="margin-top: 20px; color: #0b2540;">Best Matching Roles</h4>
+            {% for role, score in latest_roles %}
+                <div class="role-item">
+                    <strong>{{ role }}</strong>
+                    <div style="background: #dbeafe; height: 6px; border-radius: 3px; margin-top: 5px;">
+                        <div style="background: #2563eb; height: 100%; width: {{ score }}%; border-radius: 3px;"></div>
+                    </div>
+                    <small style="color: #666;">{{ score }}% match</small>
+                </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div style="margin-top: 20px; text-align: center;">
+            <a href="/charts" style="background: #2563eb; color: #fff; padding: 10px 20px; border-radius: 6px; text-decoration: none; margin-right: 10px;">📈 View Charts</a>
+            <a href="/report" style="background: #059669; color: #fff; padding: 10px 20px; border-radius: 6px; text-decoration: none;">📄 Detailed Report</a>
+        </div>
+        {% else %}
+        <div class="recent-section" style="text-align: center; padding: 40px;">
+            <p style="color: #666; font-size: 1.1rem;">No analyses yet. Upload your first resume to get started! 🚀</p>
+            <a href="{{ url_for('index') }}" style="display: inline-block; background: #2563eb; color: #fff; padding: 10px 20px; border-radius: 6px; text-decoration: none; margin-top: 10px;">Upload Resume</a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
